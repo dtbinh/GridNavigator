@@ -1,5 +1,6 @@
 import lejos.nxt.Motor;
 import lejos.robotics.navigation.DifferentialPilot;
+import lejos.util.Delay;
 import lejos.nxt.*;
 
 
@@ -17,6 +18,8 @@ public class TrackerTest {
 	    
 		DifferentialPilot pilot = new DifferentialPilot(wheelDiameter, trackWidth, Motor.A, Motor.C);
 		Tracker t1 = new Tracker (pilot, leftEye, rightEye);
+		Delay.msDelay(1000);
+		LCD.clear();
 		t1.calibrate();
 		//for (int i=0;i<4;i++){
 		t1.trackLine();

@@ -61,26 +61,26 @@ public class Tracker
    */
   public void trackLine()
   {
-    float gain = 0.5f;// you may need to change this for smooth tracking
+    float gain = 1.2f;// you may need to change this for smooth tracking
    // This method needs to detect a black marker.  
                                                  
       int lval = leftEye.getLightValue();
       int rval = rightEye.getLightValue(); 
         int error = CLDistance(lval, rval);
         int control;
-        pilot.setTravelSpeed(6);
+        pilot.setTravelSpeed(20);
         //pilot.setRotateSpeed(30);
         pilot.travel(200, true);
         while (pilot.isMoving())// while no press
         {
           lval = leftEye.getLightValue();
           rval = rightEye.getLightValue();
-          if(lval<0||rval<0){
-        	  //Sound.playTone(1000, 100);
-        	  System.out.println("black");
-        	  //return;
-          }
-          control=rval-lval;
+//          if(lval<0||rval<0){
+//        	  Sound.playTone(1000, 100);
+//        	  System.out.println("black");
+//        	  return;
+//          }
+          control=lval-rval;
           System.out.println("left "+ lval);
           System.out.println("right "+ rval);
           System.out.println("control " +control*gain);
