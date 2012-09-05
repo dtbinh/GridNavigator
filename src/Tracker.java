@@ -78,7 +78,7 @@ public class Tracker
           if(lval<0||rval<0){
         	  //Sound.playTone(1000, 100);
         	  System.out.println("black");
-        	  return;
+        	  //return;
           }
           control=rval-lval;
           System.out.println("left "+ lval);

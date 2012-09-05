@@ -18,9 +18,9 @@ public class TrackerTest {
 		DifferentialPilot pilot = new DifferentialPilot(wheelDiameter, trackWidth, Motor.A, Motor.C);
 		Tracker t1 = new Tracker (pilot, leftEye, rightEye);
 		t1.calibrate();
-		for (int i=0;i<4;i++){
+		//for (int i=0;i<4;i++){
 		t1.trackLine();
-		}
+		//}
 		
 	}
 

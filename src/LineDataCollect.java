@@ -5,6 +5,22 @@ import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
 import lejos.util.Delay;
+import lejos.nxt.*;
+//import lejos.nxt.comm.*;
+
+//import lejos.nxt.*;
+
+import lejos.robotics.navigation.DifferentialPilot;
+//import lejos.util.Delay;
+
+/**
+ * Record light sensor data for line follower experiments.
+ * Displays left, right sensor values.  Press ENTER to record, ESCAPE to end data collection
+ * and transmit.  
+ * Left sensor = S1, right sensor = S4;
+ * Run DownloadDL to receive the data and display it on your PC>.
+ * @author Roger Glassey
+
 
 /**
  * Record light sensor data for line follower experiments.
@@ -91,7 +107,14 @@ public class LineDataCollect
    }
 
    public static void main(String[] args)
-   {
-      new LineDataCollect().go();
+   {  float WheelDiameter = 5.6f;
+   	float Trackwidth = 11.4f;
+   	LightSensor leftEye = new LightSensor(SensorPort.S4);
+   	LightSensor rightEye = new LightSensor(SensorPort.S1);
+   	DifferentialPilot pilot = new DifferentialPilot(WheelDiameter, Trackwidth, Motor.A, Motor.C);
+   	Tracker t = new Tracker(pilot, leftEye, rightEye);
+   		t.calibrate();	
+         new LineDataCollect().go();
    }
+   
 }
