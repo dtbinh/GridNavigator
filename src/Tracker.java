@@ -62,25 +62,26 @@ public class Tracker
    */
   public void trackLine()
   {
-    float gain = 0.8f;// you may need to change this for smooth tracking
+    float gain = 0.7f;// you may need to change this for smooth tracking
    // This method needs to detect a black marker.  
 
-      int i = 0;                                            
+      int i = 0; //# of black marker   
+      int s = 0; //which state its in
       int lval = leftEye.getLightValue();
       int rval = rightEye.getLightValue(); 
         int error = CLDistance(lval, rval);
         int control;
-        pilot.setTravelSpeed(12);
+        pilot.setTravelSpeed(15 );
         //pilot.setRotateSpeed(30);
         pilot.travel(200, true);
         while (pilot.isMoving())// while no press
         {
-        	int lval2 = 5;
+        	int lval2 = 5; //Memory bank variables
         	int rval2 = 5;
         	while (i < 8) {
           lval = leftEye.getLightValue();
           rval = rightEye.getLightValue();
-          if(lval<0 && rval<0 && (rval2 > 0 || lval2 > 0)){
+          if((lval<-5 || rval<-5) && (rval2 > 0 && lval2 > 0)){
         	  i++;
         	  //return;
           }
@@ -103,45 +104,48 @@ public class Tracker
           System.out.println ("i is: " + i);
           System.out.println("lval2 " + lval2);
           System.out.println("rval2 " + rval2);
+          System.out.println("state is " +  s);
           //System.out.println("distance "+pilot.)
           /*LCD.drawInt(lval, 4, 0, 5);
           LCD.drawInt(rval, 4, 4, 5);
           LCD.drawInt(control, 4, 8, 5);
           LCD.drawInt(CLDistance(lval, rval), 4, 12, 5);*/
           LCD.refresh();
-          pilot.steer(control*gain);
+          pilot.steer(control*gain);         
           lval2 = lval;
           rval2 = rval;
         	 
         	  }
         	 pilot.stop();
-             pilot.rotate(180);
+        	 if (pilot.isMoving()==false){
+             pilot.rotate(180);}
              i= 0;
              control = lval - rval;
              pilot.steer(control*gain);
-             while (i < 8) {
-                 lval = leftEye.getLightValue();
-                 rval = rightEye.getLightValue();
-                 if(lval<0 && rval<0 && (rval2 > 0 || lval2 > 0)){
-               	  i++;
-                 }
-                 control=lval-rval;
-                 System.out.println("left "+ lval);
-                 System.out.println("right "+ rval);
-                 System.out.println("control " +control*gain);
-                 System.out.println ("i is: " + i);
-                 System.out.println("lval2 " + lval2);
-                 System.out.println("rval2 " + rval2);
-                 LCD.refresh();
-                 pilot.steer(control*gain);
-                 lval2 = lval;
-                 rval2 = rval;
+//             while (i < 2) {
+//                 lval = leftEye.getLightValue();
+//                 rval = rightEye.getLightValue();
+//                 if((lval<0 || rval<0) && (rval2 > 0 && lval2 > 0)){
+//               	  i++;
+//                 }
+//                 control=lval-rval;
+//                 System.out.println("left "+ lval);
+//                 System.out.println("right "+ rval);
+//                 System.out.println("control " +control*gain);
+//                 System.out.println ("i is: " + i);
+//                 System.out.println("lval2 " + lval2);
+//                 System.out.println("rval2 " + rval2);
+//                 LCD.refresh();
+//                 pilot.steer(control*gain);
+//                 lval2 = lval;
+//                 rval2 = rval;
                	 
-               	  }
-         pilot.stop();
+               	  //}
         }
        
        }
+	  
+  
 //        Button.waitForAnyPress();
 
   /**
