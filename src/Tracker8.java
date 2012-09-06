@@ -65,7 +65,7 @@ public class Tracker8
     float gain = 0.7f;// you may need to change this for smooth tracking
    // This method needs to detect a black marker.  
 
-      int i = 0;
+      int i = 3;
       int j = 0; 
       int k = 0;//to switch between left and right
       int lval = leftEye.getLightValue();
@@ -77,27 +77,34 @@ public class Tracker8
         pilot.travel(200, true);
         while (pilot.isMoving())// while no press
         {
-        	int lval2 = 5;
-        	int rval2 = 5;
-        	while (i < 200) {
-          lval = leftEye.getLightValue();
-          rval = rightEye.getLightValue();
-          if((lval<0 || rval<0) && (rval2 > 0 && lval2 > 0)){// if you encounter black marker
-        	 
-        	  if (i%3==1){
-        		  pilot.arc(Math.pow(-1, j)*-3,-90);// Turn Left
-        		  i++;
-        		  j++;
+          int lval2 = 5;
+          int rval2 = 5;
+          while (i < 200) {
+        	  lval = leftEye.getLightValue();
+        	  rval = rightEye.getLightValue();
+        	  if((lval<-0 || rval<0) && (rval2 > 0 && lval2 > 0)){// if you encounter black marker
+        		  //int a = i%4;
+        		  switch (i){
+        		  case 1:
+        			  pilot.arc(-3,-90);// Turn Left
+        			  i=4;
+        			  break;
+        		  case 4:
+        			  pilot.arc(-3, -90);//Turn Left
+        			  i=2;
+        			  break;
+        		  case 3:
+        			  pilot.arc(3,90); //Turn Right
+        			  i=1;
+        			  break;
+        		  case 2:
+        			  i=3;
+        			  pilot.arc(3, 90);//Turn Right
+        			  break;
+        		  }
           	  }
-        	  if (i%3 == 0){
-        		  pilot.arc(Math.pow(-1,k)*3,90); //Turn Right
-        		  i++;
-        		  k++;
-        	  }
-        	  }
-          if(i%3==2){
-        	  i++;
-          }
+          
+
         	  //i++;
         	  //   pilot.arc(3, 90); Turns Right      	  if (i==0){//Check if value is 0
 //        		pilot.rotate(60);	//first turn left
@@ -154,7 +161,9 @@ public class Tracker8
              pilot.rotate(180);
              i= 0;
              control = lval - rval;
-             pilot.steer(control*gain);}
+             pilot.steer(control*gain);
+             }
+  }
 //             while (i < 2) {
 //                 lval = leftEye.getLightValue();
 //                 rval = rightEye.getLightValue();
@@ -174,7 +183,7 @@ public class Tracker8
 //                 rval2 = rval;
                	 
                	  //}
-        }
+        
        
        
 	  
