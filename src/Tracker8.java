@@ -65,15 +65,12 @@ public class Tracker8
     float gain = 0.7f;// you may need to change this for smooth tracking
    // This method needs to detect a black marker.  
 
-      int i = 3;
-      int j = 0; 
-      int k = 0;//to switch between left and right
+      int i = 3; //Setting the initial state
       int lval = leftEye.getLightValue();
       int rval = rightEye.getLightValue(); 
         int error = CLDistance(lval, rval);
         int control;
         pilot.setTravelSpeed(12);
-        //pilot.setRotateSpeed(30);
         pilot.travel(200, true);
         while (pilot.isMoving())// while no press
         {
@@ -83,7 +80,6 @@ public class Tracker8
         	  lval = leftEye.getLightValue();
         	  rval = rightEye.getLightValue();
         	  if((lval<-0 || rval<0) && (rval2 > 0 && lval2 > 0)){// if you encounter black marker
-        		  //int a = i%4;
         		  switch (i){
         		  case 1:
         			  pilot.arc(-3,-90);// Turn Left
@@ -103,54 +99,14 @@ public class Tracker8
         			  break;
         		  }
           	  }
-          
-
-        	  //i++;
-        	  //   pilot.arc(3, 90); Turns Right      	  if (i==0){//Check if value is 0
-//        		pilot.rotate(60);	//first turn left
-//             	  //Check to see if white or blue
-//             	  if ((lval>20 && rval>20)){// If white
-//             	  pilot.rotate(180);// rotate(180)
-//             	  i = 2;//set value as 2;
-//             	  }
-//             	  if (())//If blue
-//             	  //set value to 1;
-//             	  //keep going  
-//        	  }
-//        	  //else if value is odd;
-//        	  //turn left
-//        	  //change value to 2
-//        	  //keep going
-//        	  //else if value is even
-//        	  //turn right
-//        	  //keep going
-//        	  //change value to 1
-//        	  //return;
-          
+                   
           control=lval-rval;
-//          LCD.drawString("Left", 0, 1);
-//          LCD.drawInt(lval, 8, 1);
-//          LCD.drawString("Right", 0, 2);
-//          LCD.drawInt(rval, 8, 2);
-//          LCD.drawString("control", 0, 3);
-//          LCD.drawInt(Math.round(control*gain), 8, 3);
-//          LCD.drawString("i", 0, 4);
-//          LCD.drawInt(i, 8, 4);
-//          LCD.drawString("lval2", 0, 5);
-//          LCD.drawInt(lval2, 8, 5);
-//          LCD.drawString("rval2", 0, 6);
-//          LCD.drawInt(rval2, 8, 6);
-          System.out.println("left "+ lval);
+          System.out.println("left "+ lval);//Output readings, so we can troubleshoot along the way.
           System.out.println("right "+ rval);
           System.out.println("control " +control*gain);
           System.out.println ("i is: " + i);
           System.out.println("lval2 " + lval2);
           System.out.println("rval2 " + rval2);
-          //System.out.println("distance "+pilot.)
-          /*LCD.drawInt(lval, 4, 0, 5);
-          LCD.drawInt(rval, 4, 4, 5);
-          LCD.drawInt(control, 4, 8, 5);
-          LCD.drawInt(CLDistance(lval, rval), 4, 12, 5);*/
           LCD.refresh();
           pilot.steer(control*gain);
           lval2 = lval;
@@ -164,31 +120,8 @@ public class Tracker8
              pilot.steer(control*gain);
              }
   }
-//             while (i < 2) {
-//                 lval = leftEye.getLightValue();
-//                 rval = rightEye.getLightValue();
-//                 if((lval<0 || rval<0) && (rval2 > 0 && lval2 > 0)){
-//               	  i++;
-//                 }
-//                 control=lval-rval;
-//                 System.out.println("left "+ lval);
-//                 System.out.println("right "+ rval);
-//                 System.out.println("control " +control*gain);
-//                 System.out.println ("i is: " + i);
-//                 System.out.println("lval2 " + lval2);
-//                 System.out.println("rval2 " + rval2);
-//                 LCD.refresh();
-//                 pilot.steer(control*gain);
-//                 lval2 = lval;
-//                 rval2 = rval;
-               	 
-               	  //}
-        
-       
-       
 	  
   
-//        Button.waitForAnyPress();
 
   /**
    * helper method for Tracker; calculates distance from centerline, used as error by trackLine()

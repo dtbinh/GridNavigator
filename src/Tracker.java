@@ -38,7 +38,6 @@ public class Tracker
   /**
    *constructor - specifies which sensor ports are left and right
    */
-//	public Tracker( Pilot thePilot,SensorPort leftI,SensorPort rightI)
   public Tracker(DifferentialPilot thePilot, LightSensor leftEye , LightSensor  rightEye)
   {
     pilot = thePilot;
@@ -66,7 +65,6 @@ public class Tracker
    // This method needs to detect a black marker.  
 
       int i = 0; //# of black marker   
-      int s = 0; //which state its in
       int lval = leftEye.getLightValue();
       int rval = rightEye.getLightValue(); 
         int error = CLDistance(lval, rval);
@@ -81,35 +79,16 @@ public class Tracker
         	while (i < 8) {
           lval = leftEye.getLightValue();
           rval = rightEye.getLightValue();
-          if((lval<-5 || rval<-5) && (rval2 > 0 && lval2 > 0)){
+          if((lval<-5 || rval<-5) && (rval2 > 0 && lval2 > 0)){//When it encounters black marker
         	  i++;
-        	  //return;
           }
           control=lval-rval;
-//          LCD.drawString("Left", 0, 1);
-//          LCD.drawInt(lval, 8, 1);
-//          LCD.drawString("Right", 0, 2);
-//          LCD.drawInt(rval, 8, 2);
-//          LCD.drawString("control", 0, 3);
-//          LCD.drawInt(Math.round(control*gain), 8, 3);
-//          LCD.drawString("i", 0, 4);
-//          LCD.drawInt(i, 8, 4);
-//          LCD.drawString("lval2", 0, 5);
-//          LCD.drawInt(lval2, 8, 5);
-//          LCD.drawString("rval2", 0, 6);
-//          LCD.drawInt(rval2, 8, 6);
-          System.out.println("left "+ lval);
+          System.out.println("left "+ lval); //Output readings, so we can troubleshoot along the way.
           System.out.println("right "+ rval);
           System.out.println("control " +control*gain);
           System.out.println ("i is: " + i);
           System.out.println("lval2 " + lval2);
           System.out.println("rval2 " + rval2);
-          System.out.println("state is " +  s);
-          //System.out.println("distance "+pilot.)
-          /*LCD.drawInt(lval, 4, 0, 5);
-          LCD.drawInt(rval, 4, 4, 5);
-          LCD.drawInt(control, 4, 8, 5);
-          LCD.drawInt(CLDistance(lval, rval), 4, 12, 5);*/
           LCD.refresh();
           pilot.steer(control*gain);         
           lval2 = lval;
@@ -122,31 +101,11 @@ public class Tracker
              i= 0;
              control = lval - rval;
              pilot.steer(control*gain);
-//             while (i < 2) {
-//                 lval = leftEye.getLightValue();
-//                 rval = rightEye.getLightValue();
-//                 if((lval<0 || rval<0) && (rval2 > 0 && lval2 > 0)){
-//               	  i++;
-//                 }
-//                 control=lval-rval;
-//                 System.out.println("left "+ lval);
-//                 System.out.println("right "+ rval);
-//                 System.out.println("control " +control*gain);
-//                 System.out.println ("i is: " + i);
-//                 System.out.println("lval2 " + lval2);
-//                 System.out.println("rval2 " + rval2);
-//                 LCD.refresh();
-//                 pilot.steer(control*gain);
-//                 lval2 = lval;
-//                 rval2 = rval;
-               	 
-               	  //}
         }
        
        }
 	  
-  
-//        Button.waitForAnyPress();
+ 
 
   /**
    * helper method for Tracker; calculates distance from centerline, used as error by trackLine()

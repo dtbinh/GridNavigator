@@ -21,9 +21,7 @@ public class Tracker8Test {
 		Delay.msDelay(1000);
 		LCD.clear();
 		t1.calibrate();
-		//for (int i=0;i<4;i++){
 		t1.trackLine();
-		//}
 		
 	}
 
